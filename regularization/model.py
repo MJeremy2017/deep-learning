@@ -108,7 +108,6 @@ class deepNN:
         batches = [range(i, i+batch_size) for i in range(0, n, batch_size)]
         return batches
     
-    
     def train(self, X_train, y_train, batch_size=200, n_iter=100, lr=0.1):
         # prepare batch training
         batches = self.generate_batch(X_train, batch_size)
@@ -125,3 +124,16 @@ class deepNN:
             if i%10 == 0:
                 loss = self.compute_cost(A, Y)
                 print(f'iteration {i}: loss {loss}')
+
+
+def accuracy(Y, Y_pred):
+    """
+    Y: vector of true value
+    Y_pred: vector of predicted value
+    """
+    
+    assert Y.shape[0] == 1
+    assert Y.shape == Y_pred.shape
+    Y_pred = np.round(Y_pred)
+    acc = float(np.dot(Y, Y_pred.T) + np.dot(1 - Y, 1 - Y_pred.T))/Y.size
+    return acc
